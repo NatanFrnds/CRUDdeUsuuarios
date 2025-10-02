@@ -1,3 +1,8 @@
+package com.nef.cruddeusuuarios;
+
+import com.nef.cruddeusuuarios.controller.UserController;
+import com.nef.cruddeusuuarios.model.Usuario;
+
 import java.util.Date;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or

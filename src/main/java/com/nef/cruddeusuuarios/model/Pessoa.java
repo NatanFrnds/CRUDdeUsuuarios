@@ -1,3 +1,5 @@
+package com.nef.cruddeusuuarios.model;
+
 import java.util.Date;
 
 public class Pessoa {

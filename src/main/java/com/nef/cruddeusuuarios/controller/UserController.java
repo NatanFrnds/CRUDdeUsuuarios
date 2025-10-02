@@ -1,3 +1,8 @@
+package com.nef.cruddeusuuarios.controller;
+
+import com.nef.cruddeusuuarios.model.Pessoa;
+import com.nef.cruddeusuuarios.model.Usuario;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -23,7 +28,7 @@ public class UserController extends Pessoa {
 
     //CRUD METHODS
 
-    public Usuario inputUsuario(){
+    public Usuario inputUsuario() {
         System.out.println("#####CADASTRO DE USUÁRIO####");
         System.out.println("Digite o nome:");
         String nome = leia.nextLine();
@@ -31,7 +36,7 @@ public class UserController extends Pessoa {
         String sobrenome = leia.nextLine();
         System.out.println("Digite sua data de nascimento:(YYYY/MM/DD)");
         Date dataNasc = new Date(leia.next());
-        int idade=getIdade();
+        int idade = getIdade();
         System.out.println("Digite o telefone: (número apenas)");
         int telefone = leia.nextInt();
         System.out.println("Digite o sexo:");
@@ -44,15 +49,15 @@ public class UserController extends Pessoa {
         String login = leia.nextLine().toLowerCase().trim();
         System.out.println("Digite a senha:");
         String senha = leia.nextLine();
-        return  new Usuario(nome, sobrenome, dataNasc, telefone, sexo, endereco,idade, email, login, senha);
+        return new Usuario(nome, sobrenome, dataNasc, telefone, sexo, endereco, idade, email, login, senha);
     }
-    public void cadastrarUsuario(Usuario novoUsuario){
+
+    public void cadastrarUsuario(Usuario novoUsuario) {
         this.usuarios.add(inputUsuario());
     }
 
 
-
-    public void listarUsuarios () {
+    public void listarUsuarios() {
         for (int i = 0; i < usuarios.size(); i++) {
             System.out.println(usuarios.get(i).info());
         }
