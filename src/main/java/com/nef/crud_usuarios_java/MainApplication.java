@@ -1,4 +1,4 @@
-package com.nef.cruddeusuuarios;
+package com.nef.crud_usuarios_java;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
