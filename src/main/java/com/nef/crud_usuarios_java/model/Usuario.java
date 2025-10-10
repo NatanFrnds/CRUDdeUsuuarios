@@ -5,19 +5,22 @@ public class Usuario extends Pessoa{
     private String login;
     private String senha;
     private String email;
+    private int id;
 
     public Usuario() {
         super();
         this.login = "";
         this.senha = "";
         this.email = "";
+        this.id=0;
     }
 
-    public Usuario(String nome, Date dataNasc) {
+    public Usuario( String nome, Date dataNasc) {
         super(nome, dataNasc);
         this.login = "";
         this.senha = "";
         this.email = "";
+        this.id=0;
     }
 
     public Usuario(String nome, String sobrenome, Date dataNasc, String telefone, char sexo, String endereco, String login, String senha, String email) {
@@ -26,7 +29,13 @@ public class Usuario extends Pessoa{
         this.senha = senha;
         this.email = email;
     }
+public void setId(int id){
+        this.id=id;
+}
 
+public int getId(){
+        return this.id;
+}
     public String getLogin() {
         return login;
     }
