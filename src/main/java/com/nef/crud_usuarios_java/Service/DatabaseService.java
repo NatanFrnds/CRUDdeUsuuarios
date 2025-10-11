@@ -17,6 +17,8 @@ public class DatabaseService {
         if (URL == null || USER == null || PASSWORD == null) {
             throw new SQLException("Credeniais não foram encontradas no .env");
         }
+        System.out.println("Conexão: online");
+
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
