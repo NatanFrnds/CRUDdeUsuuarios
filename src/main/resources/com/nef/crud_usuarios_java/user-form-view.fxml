@@ -26,6 +26,8 @@
         <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         <Label text="Login:" GridPane.rowIndex="3" />
         <TextField fx:id="loginField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <TextField fx:id="idadeField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
     </GridPane>
     <Button onAction="#handleSalvar" text="Salvar" />
 </VBox>

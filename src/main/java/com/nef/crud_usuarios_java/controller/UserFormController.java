@@ -1,7 +1,8 @@
 package com.nef.crud_usuarios_java.controller;
 
-import com.nef.crud_usuarios_java.Service.UsuarioService;
 import com.nef.crud_usuarios_java.model.Usuario;
+import com.nef.crud_usuarios_java.service.UsuarioService;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -9,13 +10,19 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 public class UserFormController {
+
     @FXML
-    private Label titleLable;
+    private Label titleLabel;
     @FXML
     private TextField nomeField;
     @FXML
-    private TextField sobrenome;
+    private TextField sobrenomeField;
     @FXML
     private TextField emailField;
     @FXML
@@ -31,22 +38,58 @@ public class UserFormController {
 
     private Stage stage;
     private Usuario usuario;
-    private UsuarioService UsuarioService;
+    private UsuarioService usuarioService;
 
     public void initialize(){
-
+        usuarioService = new UsuarioService();
+        sexoChoiceBox.setItems(FXCollections.observableArrayList("Masculino","Feminino"));
     }
-
-    public void setStage(){
-
+    public void setStage(Stage stage){
+        this.stage = stage;
     }
+    public void setUsuario(Usuario usuario){
+        this.usuario = usuario;
 
-    public void setUsuario(){
-
+        if (usuario != null){
+            titleLabel.setText("Editar Usuário");
+            nomeField.setText(usuario.getNome());
+            sobrenomeField.setText(usuario.getSobrenome());
+            emailField.setText(usuario.getEmail());
+            loginField.setText(usuario.getLogin());
+            if (usuario.getDataNascimento() != null){
+                dataNascimentoPicker.setValue(usuario.getDataNascimento());
+            }
+            telefoneField.setText(usuario.getTelefone());
+            sexoChoiceBox.setValue(usuario.getSexo() == 'M'?"Masculino":"Feminino");
+            enderecoField.setText(usuario.getEndereco());
+        } else {
+            titleLabel.setText("Adicionar Usuário");
+        }
     }
-
     @FXML
-public void handleSalvar(){
-
+    public void handleSalvar(){
+        boolean isNew = (usuario == null);
+        if (isNew){
+            usuario = new Usuario();
+        }
+        usuario.setNome(nomeField.getText());
+        usuario.setSobrenome(sobrenomeField.getText());
+        usuario.setEmail(emailField.getText());
+        usuario.setLogin(loginField.getText());
+        if (dataNascimentoPicker.getValue() != null){
+            usuario.setDataNascimento(LocalDate.from(dataNascimentoPicker.getValue()));
+        }
+        usuario.setTelefone(telefoneField.getText());
+        usuario.setEndereco(enderecoField.getText());
+        if (sexoChoiceBox.getValue() != null){
+            usuario.setSexo(sexoChoiceBox.getValue().equals("Masculino")?'M':'F');
+        }
+        if(isNew){
+            usuarioService.adicionarUsuario(usuario);
+        } else {
+            usuarioService.atualizarUsuario(usuario);
+        }
     }
+
+
 }
