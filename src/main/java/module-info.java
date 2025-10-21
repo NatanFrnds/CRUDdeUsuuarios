@@ -8,6 +8,7 @@ module com.nef.crud_usuarios_java {
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
     requires org.kordamp.bootstrapfx.core;
+    requires annotations;
 
     opens com.nef.crud_usuarios_java to javafx.fxml;
     opens com.nef.crud_usuarios_java.controller to javafx.fxml;

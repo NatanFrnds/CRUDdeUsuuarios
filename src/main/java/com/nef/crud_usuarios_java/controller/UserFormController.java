@@ -2,6 +2,7 @@ package com.nef.crud_usuarios_java.controller;
 
 import com.nef.crud_usuarios_java.model.Usuario;
 import com.nef.crud_usuarios_java.service.UsuarioService;
+
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
@@ -10,10 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 
 public class UserFormController {
 

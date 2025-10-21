@@ -1,4 +1,5 @@
 package com.nef.crud_usuarios_java.model;
+
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -93,7 +94,7 @@ public class Pessoa {
     }
 
     public int getIdade() {
-        return this.idade;
+        return idade;
     }
     public void setIdade() {
         boolean isNull = !(this.dataNascimento == null);

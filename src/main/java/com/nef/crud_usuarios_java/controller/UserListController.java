@@ -1,9 +1,9 @@
 package com.nef.crud_usuarios_java.controller;
 
-import com.nef.crud_usuarios_java.model.Usuario;
-import com.nef.crud_usuarios_java.service.UsuarioService;
 import com.nef.crud_usuarios_java.MainApplication;
+import com.nef.crud_usuarios_java.model.Usuario;
 import com.nef.crud_usuarios_java.service.DatabaseService;
+import com.nef.crud_usuarios_java.service.UsuarioService;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

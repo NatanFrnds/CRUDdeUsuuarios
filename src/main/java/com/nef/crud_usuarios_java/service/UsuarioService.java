@@ -1,4 +1,4 @@
-package com.nef.crud_usuarios_java.Service;
+package com.nef.crud_usuarios_java.service;
 
 import com.nef.crud_usuarios_java.model.Usuario;
 
@@ -25,7 +25,7 @@ public class UsuarioService {
     //INICIO - CREATE
     public void adicionarUsuario(Usuario usuario){
         String sql = "INSERT INTO usuarios (nome, sobrenome, email, login) VALUES (?,?,?,?)";
-        try (Connection conn = com.nef.crud_usuarios_java.service.DatabaseService.getConnection();
+        try (Connection conn = DatabaseService.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ){
             stmt.setString(1, usuario.getNome());
@@ -54,7 +54,7 @@ public class UsuarioService {
     public void carregarUsuarioDoBanco() {
         usuarios.clear();
         String sql = "SELECT * FROM usuarios";
-        try (Connection conn = com.nef.crud_usuarios_java.service.DatabaseService.getConnection();
+        try (Connection conn = DatabaseService.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery();) {
             while (rs.next()) {
@@ -64,7 +64,8 @@ public class UsuarioService {
                 usuario.setSobrenome(rs.getString("sobrenome"));
                 usuario.setEmail(rs.getString("email"));
                 usuario.setLogin(rs.getString("login"));
-                usuario.setDataNascimento(rs.getDate("dataNascimento").toLocalDate());
+                boolean isDataNascNull = (rs.getDate("dataNascimento").toLocalDate() == null);
+                if (!isDataNascNull) usuario.setDataNascimento(rs.getDate("dataNascimento").toLocalDate());
                 usuario.setIdade();
                 usuario.setTelefone(rs.getString("telefone"));
                 usuario.setSexo(rs.getString("sexo") != null ? rs.getString("sexo").charAt(0) : ' ');
@@ -97,7 +98,7 @@ public class UsuarioService {
         }
 
         String sql = "UPDATE usuarios SET nome = ?, sobrenome = ?, email = ?, login = ? WHERE id = ?";
-        try(Connection conn = com.nef.crud_usuarios_java.service.DatabaseService.getConnection();
+        try(Connection conn = DatabaseService.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)){
 
             stmt.setString(1,usuario.getNome());
@@ -114,13 +115,22 @@ public class UsuarioService {
 
     //FIM - UPDATE
 
+    // INICIO - DELETE
+
     public void excluirUsuario(Usuario usuario) {
+        usuarios.remove(usuario);
+        if(usuario.getId() < 0){
+            showAlert("Operação na memória local", "Sessão offline");
+        }
+        // Falta deletar no banco de dados
     }
+
+    // FIM - DELETE
 
     //METODO PARA SINCRONIZAR COM O BANCO
 
     public void sincronizarComBanco() {
-        if (!com.nef.crud_usuarios_java.service.DatabaseService.testarConexao()){
+        if (!DatabaseService.testarConexao()){
             showAlert("Sincronização falhou","Não foi possível reconectar com o banco de dados.");
             return;
         }
@@ -130,7 +140,7 @@ public class UsuarioService {
         if (!usuariosParaSync.isEmpty()){
             String sql = "INSERT INTO usuarios (nome, sobrenome, email, login) VALUES (?,?,?,?)";
             int okCount = 0;
-            try (Connection conn = com.nef.crud_usuarios_java.service.DatabaseService.getConnection()) {
+            try (Connection conn = DatabaseService.getConnection()) {
                 for (Usuario user : usuariosParaSync) {
                     try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                         stmt.setString(1, user.getNome());
